@@ -8,6 +8,7 @@ import {
   disconnect,
   isRunning,
   toggleAudio,
+  createAudioNode,
 } from "./audio";
 
 export const useStore = create((set, get) => ({
@@ -92,5 +93,31 @@ export const useStore = create((set, get) => ({
     set({
       edges: get().edges.filter((edge) => !edges.some((e) => e.id === edge.id)),
     });
+  },
+
+  createNode(type) {
+    const id = nanoid();
+
+    switch (type) {
+      case "osc": {
+        const data = { frequency: 440, type: "sine" };
+        const position = { x: 0, y: 0 };
+
+        createAudioNode(id, type, data);
+        set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+        break;
+      }
+
+      case "amp": {
+        const data = { gain: 0.5 };
+        const position = { x: 0, y: 0 };
+
+        createAudioNode(id, type, data);
+        set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+        break;
+      }
+    }
   },
 }));

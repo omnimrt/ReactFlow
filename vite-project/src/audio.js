@@ -68,3 +68,25 @@ export function isRunning() {
 export function toggleAudio() {
   return isRunning() ? context.suspend() : context.resume();
 }
+
+export function createAudioNode(id, type, data) {
+  switch (type) {
+    case "osc": {
+      const node = context.createOscillator();
+      node.frequency.value = data.frequency;
+      node.type = data.type;
+      node.start();
+
+      nodes.set(id, node);
+      break;
+    }
+
+    case "amp": {
+      const node = context.createGain();
+      node.gain.value = data.gain;
+
+      nodes.set(id, node);
+      break;
+    }
+  }
+}

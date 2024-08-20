@@ -1,4 +1,4 @@
-import { ReactFlow, Background } from "@xyflow/react";
+import { ReactFlow, Background, Panel } from "@xyflow/react";
 
 import Osc from "./nodes/Osc";
 import Amp from "./nodes/Amp";
@@ -14,6 +14,7 @@ const selector = (store) => ({
   addEdge: store.addEdge,
   onNodesDelete: store.removeNodes,
   onEdgesDelete: store.removeEdges,
+  createNode: store.createNode,
 });
 
 const nodeTypes = {
@@ -37,6 +38,10 @@ export default function App() {
       onEdgesDelete={store.onEdgesDelete}
       fitView
     >
+      <Panel position="top-right">
+        <button onClick={() => store.createNode("osc")}>osc</button>
+        <button onClick={() => store.createNode("amp")}>amp</button>
+      </Panel>
       <Background />
     </ReactFlow>
   );
